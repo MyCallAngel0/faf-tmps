@@ -1,11 +1,34 @@
 ## Lab 2
 
+### Author: Mihalachi Mihail
+
 ### Objectives
 1. Study and understand the Structural Design Patterns.
 
 2. As a continuation of the previous laboratory work, think about the functionalities that your system will need to provide to the user.
 
 3. Implement some additional functionalities using structural design patterns.
+
+---
+
+### Theory
+Structural design patterns are patterns that deal with the composition of classes or objects to form larger structures. 
+These patterns help ensure that the system's components are organized and interact efficiently while promoting flexibility
+and reusability. They focus on how to combine various objects or classes to create larger, more complex systems.
+
+Key Objectives:
+* Simplify relationships: They aim to simplify complex structures by creating clear hierarchies or relationships between components.
+* Promote flexibility and reusability: Structural patterns enable flexible design by making it easier to add or change 
+functionality without disrupting the entire system.
+
+Common Structural Patterns:
+* Adapter Pattern: Converts one interface to another expected by the client, allowing incompatible interfaces to work together.
+* Bridge Pattern: Decouples an abstraction from its implementation, allowing the two to vary independently.
+* Composite Pattern: Treats individual objects and compositions of objects uniformly, often used for representing tree-like structures.
+* Decorator Pattern: Adds new functionality to an object dynamically without altering its structure.
+* Facade Pattern: Provides a simplified interface to a complex subsystem, making it easier to interact with.
+* Flyweight Pattern: Reduces memory usage by sharing common data between objects, especially when many objects have similar data. 
+* Proxy Pattern: Controls access to an object, allowing for actions like lazy loading, access control, or logging.
 
 ---
 
@@ -19,13 +42,14 @@
 ### Implementation
 
 My project example follows the laboratory one classes and implements them in a way to fit the above mentioned
-design patterns. I use Proxy design pattern for creating a better member system. The Proxy controls access to the real 
-object, allowing you to manage its behavior, such as lazy loading, access control, logging, or resource-intensive operations. 
+design patterns. I use Proxy design pattern for creating a better member system.  
 In my implementation I have MemberProxy class, which creates limits depending on the type of member. The MemberProxy class 
 is implemented by using the previously built Member interface and a memberType attribute which can be one of the two classes: 
 Student or Librarian. Each of these classes provides has a specific access priority for the library resources, 
 the Librarian having access to all of the resources while the Student has a limited access. Here is the class implementation:
 ```
+package lab_two.domain.factories;
+
 public class MemberProxy implements Member {
     private final Member member;
     private final String memberType;
@@ -58,6 +82,8 @@ client accesses the library to get all the actions inside of it, in my case addi
 What makes it easier in LibraryFacade than in Library is that you can add one or multiple books in the library and also
 display the books in a better format.
 ```
+package lab_two.domain.facade;
+
 public class LibraryFacade {
 
     private final Library library;
@@ -95,6 +121,8 @@ in both PhysicalBook and EBook. The Composite also needs a Collection class to d
 Library class already stores my books in there, so I just used this class to further implement the Composite Design pattern.
 
 ```
+package lab_two.domain.book;
+
 public abstract class Book implements Prototype {
     private String title;
     private String author;
@@ -115,6 +143,8 @@ public abstract class Book implements Prototype {
 }
 ```
 ```
+package lab_two.domain.models;
+
 public class PhysicalBook extends Book {
     private int pages;
 
@@ -135,6 +165,8 @@ public class PhysicalBook extends Book {
 }
 ```
 ```
+package lab_two.domain.models;
+
 public class EBook extends Book {
     private final String memory;
 
@@ -156,6 +188,8 @@ public class EBook extends Book {
 ```
 And all of these design pattern are used in an example in my LibrarySystem class.
 ```
+package lab_two.client;
+
 public class LibrarySystem {
     public static void main(String[] args) {
         Book prototypePhysicalBook = new PhysicalBook("Five Nights at Freddy's: The Silver Eyes", "Scott Cawthon", "5243693821246", "horror", 274);
